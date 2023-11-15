@@ -20,8 +20,8 @@
             "datatype": "img",
             "l_resolution": 28,
             "r_resolution": 224,
-            "batch_size": 16,
-            "num_workers": 8,
+            "batch_size": 24,
+            "num_workers": 12,
             "use_shuffle": true,
             "data_len": -1
         },
@@ -38,26 +38,26 @@
     "model": {
         "which_model_G": "lwtdm",
         "finetune_norm": false,
-        "net": {
+        "enet": {
             "in_channel": 3,
             "out_channel": 3,
-            "inner_channel": 32,          // 64 or 128
-            "channel_multiplier": [8],    // [1,1] or [2,2] or [1] or [2]
-            "attn_res": 2,                // 4 or 6 or 8
+            "inner_channel": 32,
+            "channel_multiplier": [12, 12],
+            "attn_res": 2,
             "res_blocks": 2,
-            "dropout": 0.2
+            "dropout": 0.1
         },
         "beta_schedule": {
             "train": {
                 "schedule": "linear",
                 "n_timestep": 2000,
-                "linear_start": 1e-4,
+                "linear_start": 5e-4,
                 "linear_end": 2e-2
             },
             "val": {
                 "schedule": "linear",
                 "n_timestep": 2000,
-                "linear_start": 1e-4,
+                "linear_start": 5e-4,
                 "linear_end": 2e-2,
                 "sampling_timesteps": 2000,
                 "ddim_sampling_eta": 0.0

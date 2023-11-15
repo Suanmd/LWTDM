@@ -82,25 +82,25 @@ def init_weights(net, init_type='kaiming', scale=1, std=0.02):
 # Generator
 def define_G(opt):
     model_opt = opt['model']
-    if model_opt['which_model_G'] == 'srddpm':
+    if model_opt['which_model_G'] == 'ddpm':
         from .ddpm_modules import diffusion, unet
     elif model_opt['which_model_G'] == 'sr3':
         from .sr3_modules import diffusion, unet
     elif model_opt['which_model_G'] == 'lwtdm':
-        from .lwtdm_modules import diffusion, net
+        from .lwtdm_modules import diffusion, enet
 
-    if model_opt['which_model_G'] == 'lwtdm' or model_opt['which_model_G'] == 'lwtdm2':
-        if ('norm_groups' not in model_opt['net']) or model_opt['net']['norm_groups'] is None:
-            model_opt['net']['norm_groups']=32
-        model = net.Net(
-            in_channel=model_opt['net']['in_channel'],
-            out_channel=model_opt['net']['out_channel'],
-            norm_groups=model_opt['net']['norm_groups'],
-            inner_channel=model_opt['net']['inner_channel'],
-            channel_mults=model_opt['net']['channel_multiplier'],
-            attn_res=model_opt['net']['attn_res'],
-            res_blocks=model_opt['net']['res_blocks'],
-            dropout=model_opt['net']['dropout'],
+    if model_opt['which_model_G'] == 'lwtdm':
+        if ('norm_groups' not in model_opt['enet']) or model_opt['enet']['norm_groups'] is None:
+            model_opt['enet']['norm_groups']=32
+        model = enet.Net(
+            in_channel=model_opt['enet']['in_channel'],
+            out_channel=model_opt['enet']['out_channel'],
+            norm_groups=model_opt['enet']['norm_groups'],
+            inner_channel=model_opt['enet']['inner_channel'],
+            channel_mults=model_opt['enet']['channel_multiplier'],
+            attn_res=model_opt['enet']['attn_res'],
+            res_blocks=model_opt['enet']['res_blocks'],
+            dropout=model_opt['enet']['dropout'],
             image_size=model_opt['diffusion']['image_size']
         )
     else:
